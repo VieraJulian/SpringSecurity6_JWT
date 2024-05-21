@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -60,5 +62,13 @@ public class JwtUtils {
 
     public String extractUsername(DecodedJWT decodedJWT){
         return decodedJWT.getSubject().toString();
+    }
+
+    public Claim getSpecificClaim(DecodedJWT decodedJWT, String claimName){
+        return decodedJWT.getClaim(claimName);
+    }
+
+    public Map<String, Claim> returnAllClaims(DecodedJWT decodedJWT) {
+        return decodedJWT.getClaims();
     }
 }
